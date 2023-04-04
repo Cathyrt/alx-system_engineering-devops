@@ -13,7 +13,7 @@ echo "Hello World!" > /var/www/html/index.html
 echo "Ceci n'est pas une page" > /var/www/html/404.html
 
 # Add a custom HTTP response header named "X-Served-By" with the value set to the hostname of the server nginx is running on
-sed -i '14a \\tadd_header X-Served-By $hostname;' /etc/nginx/nginx.conf
+sed -i "14a \\tadd_header X-Served-By \$hostname;" /etc/nginx/nginx.conf
 
-# Restart the nginx service to apply the changes 
-sudo service nginx restart 
+# Restart the nginx service to apply the changes
+sudo service nginx restart
