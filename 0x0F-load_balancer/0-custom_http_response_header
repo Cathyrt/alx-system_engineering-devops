@@ -3,16 +3,9 @@
 
 sudo apt-get  update
 sudo apt-get -y install nginx
-sudo ufw allow 'Nginx HTTP'
-mkdir -p /var/www/html
-chmod -R 755 /var/www
 
-# Create index.html and 404.html files 
-echo "Hello World!" > /var/www/html/index.html
-echo "Ceci n'est pas une page" > /var/www/html/404.html
-
-# Add a custom HTTP response header named "X-Served-By" with the value set to the hostname of the server nginx is running on
-sed -i "14a \\tadd_header X-Served-By \$hostname;" /etc/nginx/nginx.conf
+# Open Nginx configuration file for editing
+sudo sed -i '/http {/a add_header X-Served-By $hostname;' /etc/nginx/nginx.conf
 
 # Restart the nginx service to apply the changes
 sudo service nginx restart
