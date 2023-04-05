@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+# This script setup nginx to listen to port 80
+
+# Check if Nginx is installed and running
+sudo service nginx status 
+
+# Check if Nginx is listening on port 80
+sudo netstat -tuln | grep 80
+
+# Check if there are any errors in the Nginx configuration file
+sudo nginx -t
+
+# Check if there are any other processes running on port 80
+sudo lsof -i :80
+
+# Restart Nginx
+sudo service nginx restart
