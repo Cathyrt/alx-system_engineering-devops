@@ -4,7 +4,7 @@
 sudo apt-get update
 sudo apt-get install -y haproxy
 
-# Configure HAProxy c
+# Configure HAProxy 
 sudo tee /etc/haproxy/haproxy.cfg <<EOF
 frontend http_front
     bind *:80
@@ -14,9 +14,6 @@ backend http_back
     balance roundrobin
     server 111478-web-01 52.90.13.53-web-01:80 check
     server 111478-web-02 52.91.131.227-web-02:80 check
-    timeout connect 5s
-    timeout server 30s
-    timeout check 5s
 EOF
 
 # Enable HAproxy init script
