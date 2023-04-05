@@ -4,32 +4,11 @@
 sudo apt-get update
 sudo apt-get install -y haproxy
 
-# Configure HAproxy
-sudo mv /etc/haproxy/haproxy.cfg /etc/haproxy/haproxy.cfg.bak
-sudo touch /etc/haproxy/haproxy.cfg
-
-echo "global
-    log /dev/log    local0
-    log /dev/log    local1 notice
-    chroot /var/lib/haproxy
-    stats socket /run/haproxy/admin.sock mode 660 level admin expose-fd listeners
-    stats timeout 30s
-    user haproxy
-    group haproxy
-    daemon
-
-defaults
-    log     global
-    mode    http
-    option  httplog
-    option  dontlognull
-    timeout connect 5000
-    timeout client  50000
-    timeout server  50000
-
+# Configure HAProxy c
+sudo tee /etc/haproxy/haproxy.cfg <<EOF
 frontend http_front
     bind *:80
-    default_backend http_back
+    default_backend servers
 
 backend http_back
     balance roundrobin
@@ -37,7 +16,8 @@ backend http_back
     server 111478-web-02 52.91.131.227-web-02:80 check
     timeout connect 5s
     timeout server 30s
-    timeout check 5s" | sudo tee /etc/haproxy/haproxy.cfg
+    timeout check 5s
+EOF
 
 # Enable HAproxy init script
 sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
