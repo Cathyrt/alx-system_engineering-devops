@@ -33,8 +33,8 @@ frontend http_front
 
 backend http_back
     balance roundrobin
-    server web-01 52.90.13.53-web-01:80 check
-    server web-02 52.91.131.227-web-02:80 check
+    server 111478-web-01 52.90.13.53-web-01:80 check
+    server 111478-web-02 52.91.131.227-web-02:80 check
     timeout connect 5s
     timeout server 30s
     timeout check 5s" | sudo tee /etc/haproxy/haproxy.cfg
