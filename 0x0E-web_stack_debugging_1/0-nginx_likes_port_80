@@ -1,7 +1,5 @@
 #!/usr/bin/env bash
 # This script setup nginx to listen to port 80
-
-# Check if Nginx is installed and running
 sudo service nginx status 
 
 # Check if Nginx is listening on port 80
@@ -14,7 +12,7 @@ sudo nginx -t
 sudo lsof -i :80
 
 # Configure Nginx to listen on port 80 of all the server's active IPv4 IPs
-sudo sed -i 's/listen \[::\]:80 default_server;/listen [::]:80 default_server;/' /etc/nginx/nginx.conf
+sudo ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/
 
 # Restart Nginx
 sudo service nginx restart
