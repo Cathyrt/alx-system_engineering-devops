@@ -37,6 +37,7 @@ frontend http
         bind *:80
         mode http
         bind *:443 ssl crt /etc/haproxy/certs/www.cathyrt.tech.pem
+        http-request redirect scheme https code 301 unless { ssl_fc }
         stats uri /haproxy?stats
         default_backend servers
 
