@@ -3,17 +3,15 @@
 
 sudo apt-get update
 sudo apt-get install -y haproxy 
-sudo tee /etc/haproxy/haproxy.cfg <<EOF
-frontend http
-	bind *:80
-	default_backend servers
-
-backend servers
-	mode http
-	balance roundrobin
-	server 111478-web-01 52.90.13.53-web-01:80 check
-	server 111478-web-02 52.91.131.227-web-02:80 check
-EOF
+echo '
+frontend sammykingx.tech
+        bind 0:80
+        default_backend web_servers
+backend web_servers
+        balance roundrobin
+        server 111478-web-01 52.90.13.53:80
+        server 111478-web-02 52.91.131.227:80
+' >> /etc/haproxy/haproxy.cfg
 
 # Enable HAproxy init script
 sudo sed -i 's/ENABLED=0/ENABLED=1/' /etc/default/haproxy
