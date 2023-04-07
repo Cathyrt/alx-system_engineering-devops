@@ -1,24 +1,19 @@
 #!/usr/bin/env bash
 # This script use awk && bash function to print info on subdomains
 
-function audit_subdomain {
-  local domain=$1
-  local subdomain=$2
-  local record_type
-  record_type=$(dig +short "$subdomain"."$domain" | awk '{print $1}')
-  local destination
-  destination=$(dig +short "$subdomain"."$domain" | awk '{print $2}')
-  echo "The subdomain $subdomain is a $record_type record and points to $destination"
+print_subdomain_info() {
+    printf "The subdomain %s is a " "$1"
+    RECORD=$(dig "$1"."$2" | grep -A1 "ANSWER SECTION:" | grep "$2" | awk -F' ' '{print $4}')
+    printf "%s record and points to " "$RECORD"
+    dig "$1"."$2" | grep -A1 "ANSWER SECTION:" | grep "$2" | awk -F' ' '{print $5}'
+	return 0
 }
 
-domain=$1
-subdomain=$2
-
-if [ -z "$subdomain" ]; then
-  audit_subdomain "$domain" www
-  audit_subdomain "$domain" lb-01
-  audit_subdomain "$domain" web-01
-  audit_subdomain "$domain" web-02
+if (($# == 2)); then
+    print_subdomain_info "$2" "$1"
 else
-  audit_subdomain "$domain" "$subdomain"
+    for sub in "www" "lb-01" "web-01" "web-02"
+    do
+	print_subdomain_info "$sub" "$1"
+    done
 fi
