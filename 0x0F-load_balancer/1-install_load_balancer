@@ -4,9 +4,10 @@
 sudo apt-get update
 sudo apt-get install -y haproxy 
 echo '
-frontend 
+frontend http-in
         bind 0:80
         default_backend web_servers
+
 backend web_servers
         balance roundrobin
         server 111478-web-01 52.91.183.27:80
