@@ -8,9 +8,9 @@ import requests
 
 def top_ten(subreddit):
     """Retrieves the title of the top ten posts from a given subreddit."""
-    url = "http://reddit.com/r/{}/hot.json".format(subreddit)
-    header = {'User-agent': 'Mozilla/5.0'}
-    limits = {'limit': '10'}
+    url = "http://www.reddit.com/r/{}/hot.json".format(subreddit)
+    header = {"User-agent": "Mozilla/5.0"}
+    limits = {"limit": 10}
 
     res = requests.get(url, headers=header,
                        params=limits, allow_redirects=False)
