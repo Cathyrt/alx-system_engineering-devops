@@ -1,10 +1,4 @@
 #!/usr/bin/env bash
 # Gracefully reload gunicorn worker processes
 
-# for i in $(pgrep gunicorn);do
-#     if ! kill -HUP "$i"; then
-#         exit 1
-#     fi
-# done
-
-sudo reload gunicorn
+ps aux | grep gunicorn | awk '{ print $2 }' | xargs kill -HUP
